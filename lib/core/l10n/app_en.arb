@@ -1,0 +1,131 @@
+{
+  "@@locale": "en",
+  "appTitle": "Route E-Commerce",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "loading": "Loading ...",
+  "@loading": {
+    "description": "Default loading text"
+  },
+  "nameRequired": "Name is required",
+  "@nameRequired": {
+    "description": "Validation error when name is empty"
+  },
+  "invalidNameFormat": "Invalid name format",
+  "@invalidNameFormat": {
+    "description": "Validation error when name format is invalid"
+  },
+  "emailRequired": "Email is required",
+  "@emailRequired": {
+    "description": "Validation error when email is empty"
+  },
+  "invalidEmailFormat": "Invalid email address format",
+  "@invalidEmailFormat": {
+    "description": "Validation error when email format is invalid"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Validation error when password is empty"
+  },
+  "passwordInvalid": "Password must be at least 8 characters, include upper and lower case letters, numbers, and special characters",
+  "@passwordInvalid": {
+    "description": "Validation error when password does not meet requirements"
+  },
+  "confirmPasswordRequired": "Confirm password is required",
+  "@confirmPasswordRequired": {
+    "description": "Validation error when password confirmation is empty"
+  },
+  "passwordConfirmationMismatch": "Passwords do not match",
+  "@passwordConfirmationMismatch": {
+    "description": "Validation error when confirmation password does not match"
+  },
+  "phoneRequired": "Mobile number is required",
+  "@phoneRequired": {
+    "description": "Validation error when mobile number is empty"
+  },
+  "invalidPhoneFormat": "Invalid Egyptian mobile number",
+  "@invalidPhoneFormat": {
+    "description": "Validation error when mobile number format is invalid"
+  },
+  "welcomeBackToRoute": "Welcome Back To Route",
+  "@welcomeBackToRoute": {
+    "description": "Login screen main heading"
+  },
+  "pleaseSignInWithYourMail": "Please sign in with your mail",
+  "@pleaseSignInWithYourMail": {
+    "description": "Login screen subtitle"
+  },
+  "userName": "User Name",
+  "@userName": {
+    "description": "Login email/username field label"
+  },
+  "enterYourName": "enter your name",
+  "@enterYourName": {
+    "description": "Login email/username field hint"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "enterYourPassword": "enter your password",
+  "@enterYourPassword": {
+    "description": "Password field hint"
+  },
+  "forgotPassword": "Forgot password",
+  "@forgotPassword": {
+    "description": "Forgot password link label"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button label"
+  },
+  "dontHaveAnAccount": "Don’t have an account? ",
+  "@dontHaveAnAccount": {
+    "description": "Prompt before create account link"
+  },
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Create account link label"
+  },
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Register full name field label"
+  },
+  "enterYourFullName": "enter your full name",
+  "@enterYourFullName": {
+    "description": "Register full name field hint"
+  },
+  "mobileNumber": "Mobile Number",
+  "@mobileNumber": {
+    "description": "Register mobile number field label"
+  },
+  "enterYourMobileNo": "enter your mobile no.",
+  "@enterYourMobileNo": {
+    "description": "Register mobile number field hint"
+  },
+  "emailAddress": "E-mail address",
+  "@emailAddress": {
+    "description": "Register email address field label"
+  },
+  "enterYourEmailAddress": "enter your email address",
+  "@enterYourEmailAddress": {
+    "description": "Register email address field hint"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Sign up button label"
+  },
+  "showPassword": "Show password",
+  "@showPassword": {
+    "description": "Tooltip for showing password"
+  },
+  "hidePassword": "Hide password",
+  "@hidePassword": {
+    "description": "Tooltip for hiding password"
+  },
+  "loginFailed": "Login failed",
+  "@loginFailed": {
+    "description": "Default error message when login fails"
+  }
+}
