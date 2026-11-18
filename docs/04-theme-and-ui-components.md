@@ -67,6 +67,7 @@ All text styles are mapped into `ThemeData.textTheme` and accessed via `Theme.of
 |---|---|---|---|
 | `AppTextField` | `lib/core/common_ui/app_text_field.dart` | `const AppTextField({super.key, required String label, required String hintText, required TextEditingController controller, String? Function(String?)? validator, bool isPassword = false, TextInputType keyboardType = TextInputType.text, TextInputAction textInputAction = TextInputAction.next, List<TextInputFormatter>? inputFormatters, ValueChanged<String>? onFieldSubmitted, bool enabled = true, Color? labelColor})` | Labeled rounded form input with optional password visibility toggle and RTL-aware padding |
 | `AppButton` | `lib/core/common_ui/app_button.dart` | `const AppButton({super.key, required String label, required VoidCallback? onPressed, bool isLoading = false, bool isEnabled = true, Color? backgroundColor, Color? foregroundColor, double height = 64, double borderRadius = 15})` | Full-width CTA button with loading spinner and disabled state support |
+| `RouteLogo` | `lib/core/common_ui/route_logo.dart` | `const RouteLogo({super.key, double height = 72, Color? color})` | Vector wordmark for the Route brand displayed on auth and home screens |
 
 ---
 

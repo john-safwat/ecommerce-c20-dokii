@@ -13,7 +13,7 @@ import 'package:route_ecommerce/core/utils/validators.dart';
 import 'package:route_ecommerce/features/auth/presentation/register/view/register_actions.dart';
 import 'package:route_ecommerce/features/auth/presentation/register/view/register_cubit.dart';
 import 'package:route_ecommerce/features/auth/presentation/register/view/register_state.dart';
-import 'package:route_ecommerce/features/auth/presentation/widgets/route_logo.dart';
+import 'package:route_ecommerce/core/common_ui/route_logo.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

@@ -13,7 +13,7 @@ import 'package:route_ecommerce/core/utils/validators.dart';
 import 'package:route_ecommerce/features/auth/presentation/login/view/login_actions.dart';
 import 'package:route_ecommerce/features/auth/presentation/login/view/login_cubit.dart';
 import 'package:route_ecommerce/features/auth/presentation/login/view/login_state.dart';
-import 'package:route_ecommerce/features/auth/presentation/widgets/route_logo.dart';
+import 'package:route_ecommerce/core/common_ui/route_logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

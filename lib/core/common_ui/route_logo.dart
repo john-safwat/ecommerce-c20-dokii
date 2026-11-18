@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:route_ecommerce/core/utils/context_extention.dart';
 
-/// Vector wordmark for the Route brand displayed on auth screens.
+/// Vector wordmark for the Route brand displayed on auth and home screens.
 class RouteLogo extends StatelessWidget {
   final double height;
   final Color? color;

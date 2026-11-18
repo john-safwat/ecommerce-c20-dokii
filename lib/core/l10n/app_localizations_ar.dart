@@ -105,4 +105,108 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get loginFailed => 'فشل تسجيل الدخول';
+
+  @override
+  String get searchHint => 'عمّ تبحث؟';
+
+  @override
+  String get viewAll => 'عرض الكل';
+
+  @override
+  String get shopNow => 'تسوق الآن';
+
+  @override
+  String get reviewLabel => 'تقييم';
+
+  @override
+  String get egpCurrency => 'ج.م';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get failedToLoadHomeData => 'تعذر تحميل بيانات الصفحة الرئيسية';
+
+  @override
+  String get cart => 'عربة التسوق';
+
+  @override
+  String get addToWishlist => 'إضافة إلى المفضلة';
+
+  @override
+  String get addToCart => 'إضافة إلى السلة';
+
+  @override
+  String get failedToLoadCategories => 'تعذر تحميل الفئات';
+
+  @override
+  String get failedToLoadSubCategories => 'تعذر تحميل الفئات الفرعية';
+
+  @override
+  String get noSubCategories => 'لا توجد فئات فرعية متاحة';
+
+  @override
+  String get noCategories => 'لا توجد فئات متاحة';
+
+  @override
+  String get homeTab => 'الرئيسية';
+
+  @override
+  String get categoriesTab => 'الفئات';
+
+  @override
+  String get wishlistTab => 'المفضلة';
+
+  @override
+  String get profileTab => 'الحساب';
+
+  @override
+  String get comingSoon => 'قريبًا';
+
+  @override
+  String get failedToLoadProducts => 'تعذر تحميل المنتجات';
+
+  @override
+  String get noProducts => 'لا توجد منتجات متاحة';
+
+  @override
+  String get productDetails => 'تفاصيل المنتج';
+
+  @override
+  String soldCount(String count) {
+    return '$count مباع';
+  }
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get readMore => 'اقرأ المزيد';
+
+  @override
+  String get readLess => 'اقرأ أقل';
+
+  @override
+  String get size => 'المقاس';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get totalPrice => 'السعر الإجمالي';
+
+  @override
+  String get addedToCart => 'تمت الإضافة إلى السلة';
+
+  @override
+  String get failedToLoadProductDetails => 'تعذر تحميل تفاصيل المنتج';
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get decreaseQuantity => 'تقليل الكمية';
+
+  @override
+  String get increaseQuantity => 'زيادة الكمية';
 }

@@ -127,5 +127,146 @@
   "loginFailed": "Login failed",
   "@loginFailed": {
     "description": "Default error message when login fails"
+  },
+  "searchHint": "what do you search for?",
+  "@searchHint": {
+    "description": "Placeholder text in home search bar"
+  },
+  "viewAll": "view all",
+  "@viewAll": {
+    "description": "Action link to view all items in a section"
+  },
+  "shopNow": "Shop Now",
+  "@shopNow": {
+    "description": "CTA button label on home promotional banner"
+  },
+  "reviewLabel": "Review",
+  "@reviewLabel": {
+    "description": "Review label before product rating"
+  },
+  "egpCurrency": "EGP",
+  "@egpCurrency": {
+    "description": "Egyptian pound currency code"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button label on error state"
+  },
+  "failedToLoadHomeData": "Failed to load home data",
+  "@failedToLoadHomeData": {
+    "description": "Error message when home data fails to load"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Semantic tooltip for cart button"
+  },
+  "addToWishlist": "Add to wishlist",
+  "@addToWishlist": {
+    "description": "Semantic tooltip for wishlist button"
+  },
+  "addToCart": "Add to cart",
+  "@addToCart": {
+    "description": "Semantic tooltip for add to cart button"
+  },
+  "failedToLoadCategories": "Failed to load categories",
+  "@failedToLoadCategories": {
+    "description": "Error message when categories list fails to load"
+  },
+  "failedToLoadSubCategories": "Failed to load subcategories",
+  "@failedToLoadSubCategories": {
+    "description": "Error message when subcategories fail to load"
+  },
+  "noSubCategories": "No subcategories available",
+  "@noSubCategories": {
+    "description": "Empty state message when a category has no subcategories"
+  },
+  "noCategories": "No categories available",
+  "@noCategories": {
+    "description": "Empty state message when no categories are returned"
+  },
+  "homeTab": "Home",
+  "@homeTab": {
+    "description": "Semantic label for Home bottom navigation tab"
+  },
+  "categoriesTab": "Categories",
+  "@categoriesTab": {
+    "description": "Semantic label for Categories bottom navigation tab"
+  },
+  "wishlistTab": "Wishlist",
+  "@wishlistTab": {
+    "description": "Semantic label for Wishlist bottom navigation tab"
+  },
+  "profileTab": "Profile",
+  "@profileTab": {
+    "description": "Semantic label for Profile bottom navigation tab"
+  },
+  "comingSoon": "Coming soon",
+  "@comingSoon": {
+    "description": "Placeholder message for unimplemented tabs"
+  },
+  "failedToLoadProducts": "Failed to load products",
+  "@failedToLoadProducts": {
+    "description": "Error message when products list fails to load"
+  },
+  "noProducts": "No products available",
+  "@noProducts": {
+    "description": "Empty state message when no products are returned"
+  },
+  "productDetails": "Product Details",
+  "@productDetails": {
+    "description": "App bar title on the product details screen"
+  },
+  "soldCount": "{count} Sold",
+  "@soldCount": {
+    "description": "Sold count pill text on product details",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description section heading on product details"
+  },
+  "readMore": "Read More",
+  "@readMore": {
+    "description": "Expandable description link when collapsed"
+  },
+  "readLess": "Read Less",
+  "@readLess": {
+    "description": "Expandable description link when expanded"
+  },
+  "size": "Size",
+  "@size": {
+    "description": "Size selector heading on product details"
+  },
+  "color": "Color",
+  "@color": {
+    "description": "Color selector heading on product details"
+  },
+  "totalPrice": "Total price",
+  "@totalPrice": {
+    "description": "Total price label in bottom bar on product details"
+  },
+  "addedToCart": "Added to cart",
+  "@addedToCart": {
+    "description": "Confirmation message when adding product to cart"
+  },
+  "failedToLoadProductDetails": "Failed to load product details",
+  "@failedToLoadProductDetails": {
+    "description": "Error message when product details fail to load"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Semantic tooltip for search icon button"
+  },
+  "decreaseQuantity": "Decrease quantity",
+  "@decreaseQuantity": {
+    "description": "Semantic tooltip for decrement quantity button"
+  },
+  "increaseQuantity": "Increase quantity",
+  "@increaseQuantity": {
+    "description": "Semantic tooltip for increment quantity button"
   }
 }

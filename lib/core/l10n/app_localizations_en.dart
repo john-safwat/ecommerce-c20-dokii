@@ -104,4 +104,108 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginFailed => 'Login failed';
+
+  @override
+  String get searchHint => 'what do you search for?';
+
+  @override
+  String get viewAll => 'view all';
+
+  @override
+  String get shopNow => 'Shop Now';
+
+  @override
+  String get reviewLabel => 'Review';
+
+  @override
+  String get egpCurrency => 'EGP';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get failedToLoadHomeData => 'Failed to load home data';
+
+  @override
+  String get cart => 'Cart';
+
+  @override
+  String get addToWishlist => 'Add to wishlist';
+
+  @override
+  String get addToCart => 'Add to cart';
+
+  @override
+  String get failedToLoadCategories => 'Failed to load categories';
+
+  @override
+  String get failedToLoadSubCategories => 'Failed to load subcategories';
+
+  @override
+  String get noSubCategories => 'No subcategories available';
+
+  @override
+  String get noCategories => 'No categories available';
+
+  @override
+  String get homeTab => 'Home';
+
+  @override
+  String get categoriesTab => 'Categories';
+
+  @override
+  String get wishlistTab => 'Wishlist';
+
+  @override
+  String get profileTab => 'Profile';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get failedToLoadProducts => 'Failed to load products';
+
+  @override
+  String get noProducts => 'No products available';
+
+  @override
+  String get productDetails => 'Product Details';
+
+  @override
+  String soldCount(String count) {
+    return '$count Sold';
+  }
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get readMore => 'Read More';
+
+  @override
+  String get readLess => 'Read Less';
+
+  @override
+  String get size => 'Size';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get totalPrice => 'Total price';
+
+  @override
+  String get addedToCart => 'Added to cart';
+
+  @override
+  String get failedToLoadProductDetails => 'Failed to load product details';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get decreaseQuantity => 'Decrease quantity';
+
+  @override
+  String get increaseQuantity => 'Increase quantity';
 }

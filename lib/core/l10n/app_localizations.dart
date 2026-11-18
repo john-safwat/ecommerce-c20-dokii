@@ -289,6 +289,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login failed'**
   String get loginFailed;
+
+  /// Placeholder text in home search bar
+  ///
+  /// In en, this message translates to:
+  /// **'what do you search for?'**
+  String get searchHint;
+
+  /// Action link to view all items in a section
+  ///
+  /// In en, this message translates to:
+  /// **'view all'**
+  String get viewAll;
+
+  /// CTA button label on home promotional banner
+  ///
+  /// In en, this message translates to:
+  /// **'Shop Now'**
+  String get shopNow;
+
+  /// Review label before product rating
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get reviewLabel;
+
+  /// Egyptian pound currency code
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get egpCurrency;
+
+  /// Retry button label on error state
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Error message when home data fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load home data'**
+  String get failedToLoadHomeData;
+
+  /// Semantic tooltip for cart button
+  ///
+  /// In en, this message translates to:
+  /// **'Cart'**
+  String get cart;
+
+  /// Semantic tooltip for wishlist button
+  ///
+  /// In en, this message translates to:
+  /// **'Add to wishlist'**
+  String get addToWishlist;
+
+  /// Semantic tooltip for add to cart button
+  ///
+  /// In en, this message translates to:
+  /// **'Add to cart'**
+  String get addToCart;
+
+  /// Error message when categories list fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load categories'**
+  String get failedToLoadCategories;
+
+  /// Error message when subcategories fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load subcategories'**
+  String get failedToLoadSubCategories;
+
+  /// Empty state message when a category has no subcategories
+  ///
+  /// In en, this message translates to:
+  /// **'No subcategories available'**
+  String get noSubCategories;
+
+  /// Empty state message when no categories are returned
+  ///
+  /// In en, this message translates to:
+  /// **'No categories available'**
+  String get noCategories;
+
+  /// Semantic label for Home bottom navigation tab
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTab;
+
+  /// Semantic label for Categories bottom navigation tab
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categoriesTab;
+
+  /// Semantic label for Wishlist bottom navigation tab
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get wishlistTab;
+
+  /// Semantic label for Profile bottom navigation tab
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTab;
+
+  /// Placeholder message for unimplemented tabs
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// Error message when products list fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load products'**
+  String get failedToLoadProducts;
+
+  /// Empty state message when no products are returned
+  ///
+  /// In en, this message translates to:
+  /// **'No products available'**
+  String get noProducts;
+
+  /// App bar title on the product details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Product Details'**
+  String get productDetails;
+
+  /// Sold count pill text on product details
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Sold'**
+  String soldCount(String count);
+
+  /// Description section heading on product details
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// Expandable description link when collapsed
+  ///
+  /// In en, this message translates to:
+  /// **'Read More'**
+  String get readMore;
+
+  /// Expandable description link when expanded
+  ///
+  /// In en, this message translates to:
+  /// **'Read Less'**
+  String get readLess;
+
+  /// Size selector heading on product details
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
+  /// Color selector heading on product details
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// Total price label in bottom bar on product details
+  ///
+  /// In en, this message translates to:
+  /// **'Total price'**
+  String get totalPrice;
+
+  /// Confirmation message when adding product to cart
+  ///
+  /// In en, this message translates to:
+  /// **'Added to cart'**
+  String get addedToCart;
+
+  /// Error message when product details fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load product details'**
+  String get failedToLoadProductDetails;
+
+  /// Semantic tooltip for search icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// Semantic tooltip for decrement quantity button
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease quantity'**
+  String get decreaseQuantity;
+
+  /// Semantic tooltip for increment quantity button
+  ///
+  /// In en, this message translates to:
+  /// **'Increase quantity'**
+  String get increaseQuantity;
 }
 
 class _AppLocalizationsDelegate
