@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:route_ecommerce/core/base/resources.dart';
 import 'package:route_ecommerce/core/common_ui/app_button.dart';
 import 'package:route_ecommerce/core/di/injection.dart';
+import 'package:route_ecommerce/core/routing/app_routes.dart';
 import 'package:route_ecommerce/core/theme/app_colors.dart';
 import 'package:route_ecommerce/core/utils/context_extention.dart';
 import 'package:route_ecommerce/features/commerce/domain/entities/product_details_entity.dart';
@@ -14,6 +15,9 @@ import 'package:route_ecommerce/features/commerce/presentation/product_details/p
 import 'package:route_ecommerce/features/commerce/presentation/product_details/widgets/product_details_shimmer.dart';
 import 'package:route_ecommerce/features/commerce/presentation/product_details/widgets/product_details_variants.dart';
 import 'package:route_ecommerce/features/commerce/presentation/product_details/widgets/product_image_carousel.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_actions.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_cubit.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_state.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final String productId;
@@ -26,12 +30,17 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   final ProductDetailsCubit _cubit = getIt<ProductDetailsCubit>();
+  final CartCubit? _cartCubit = getIt.isRegistered<CartCubit>()
+      ? getIt<CartCubit>()
+      : null;
   StreamSubscription<ProductDetailsNavigationAction>? _navSub;
+  StreamSubscription<CartNavigationAction>? _cartNavSub;
 
   @override
   void initState() {
     super.initState();
     _navSub = _cubit.navStream.listen(_handleNavigation);
+    _cartNavSub = _cartCubit?.navStream.listen(_handleCartNavigation);
     if (widget.productId.isNotEmpty) {
       _cubit.doAction(LoadProductDetailsAction(widget.productId));
     }
@@ -42,8 +51,29 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     switch (event) {
       case ShowProductDetailsToast(:final message, :final isError):
         _showSnackBar(message, isError: isError);
-      case ShowAddedToCartToast():
-        _showSnackBar(context.locale.addedToCart);
+    }
+  }
+
+  void _handleCartNavigation(CartNavigationAction event) {
+    if (!mounted) return;
+    switch (event) {
+      case ShowCartToast(:final message, :final isError):
+        _showSnackBar(message, isError: isError);
+      case ShowCashOrderSuccessToast():
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case ShowCheckoutMissingCartIdToast():
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case ShowPaymentResultToast():
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case DismissCheckoutSheet():
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case NavigateToPaymentWebView():
+        // TODO: Handle this case.
+        throw UnimplementedError();
     }
   }
 
@@ -61,6 +91,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   void dispose() {
     _navSub?.cancel();
+    _cartNavSub?.cancel();
     _cubit.close();
     super.dispose();
   }
@@ -71,8 +102,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       value: _cubit,
       child: Scaffold(
         appBar: _ProductDetailsAppBar(
+          cartCubit: _cartCubit,
           onSearchTap: () => _showSnackBar(context.locale.comingSoon),
-          onCartTap: () => _showSnackBar(context.locale.comingSoon),
+          onCartTap: () => Navigator.of(context).pushNamed(AppRoutes.cart),
         ),
         body: BlocBuilder<ProductDetailsCubit, ProductDetailsStates>(
           builder: (context, state) {
@@ -85,7 +117,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 onRetry: () =>
                     _cubit.doAction(LoadProductDetailsAction(widget.productId)),
               ),
-              Status.success => _buildContent(
+              Status.success => _buildCartAwareContent(
                 context,
                 state,
                 state.productResource.data!,
@@ -97,13 +129,53 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  Widget _buildContent(
+  Widget _buildCartAwareContent(
     BuildContext context,
     ProductDetailsStates state,
     ProductDetailsEntity product,
   ) {
+    final cartCubit = _cartCubit;
+    if (cartCubit == null) {
+      return _buildContent(
+        context,
+        state,
+        product,
+        cartCount: 0,
+        isCartPending: false,
+      );
+    }
+
+    return BlocSelector<
+      CartCubit,
+      CartState,
+      ({int cartCount, bool isPending})
+    >(
+      bloc: cartCubit,
+      selector: (cartState) => (
+        cartCount: cartState.cart[product.id]?.count ?? 0,
+        isPending: cartState.isProductPending(product.id),
+      ),
+      builder: (context, cartStatus) => _buildContent(
+        context,
+        state,
+        product,
+        cartCount: cartStatus.cartCount,
+        isCartPending: cartStatus.isPending,
+      ),
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    ProductDetailsStates state,
+    ProductDetailsEntity product, {
+    required int cartCount,
+    required bool isCartPending,
+  }) {
+    final inCart = cartCount > 0;
+    final displayQuantity = inCart ? cartCount : state.quantity;
     final unitPrice = product.effectivePrice;
-    final totalPrice = unitPrice * state.quantity;
+    final totalPrice = unitPrice * displayQuantity;
 
     return Column(
       children: [
@@ -129,11 +201,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   sold: product.sold,
                   rating: product.ratingsAverage,
                   ratingsCount: product.ratingsQuantity,
-                  quantity: state.quantity,
-                  onDecrement: () =>
-                      _cubit.doAction(const DecrementQuantityAction()),
-                  onIncrement: () =>
-                      _cubit.doAction(const IncrementQuantityAction()),
+                  quantity: displayQuantity,
+                  onDecrement: () => _handleDecrement(product, cartCount),
+                  onIncrement: () => _handleIncrement(product, cartCount),
                 ),
                 const SizedBox(height: 16),
                 _DescriptionSection(
@@ -159,10 +229,47 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ),
         _BottomPriceBar(
           totalPriceText: _formatPrice(context, totalPrice),
-          onAddToCart: () => _cubit.doAction(const AddToCartAction()),
+          inCart: inCart,
+          isPending: isCartPending,
+          onCartAction: () => _handleCartAction(
+            product,
+            inCart: inCart,
+            quantity: state.quantity,
+          ),
         ),
       ],
     );
+  }
+
+  void _handleIncrement(ProductDetailsEntity product, int cartCount) {
+    if (cartCount > 0) {
+      if (product.quantity > 0 && cartCount >= product.quantity) return;
+      _cartCubit?.doAction(UpdateCart(product.id, cartCount + 1));
+    } else {
+      _cubit.doAction(const IncrementQuantityAction());
+    }
+  }
+
+  void _handleDecrement(ProductDetailsEntity product, int cartCount) {
+    if (cartCount > 0) {
+      _cartCubit?.doAction(UpdateCart(product.id, cartCount - 1));
+    } else {
+      _cubit.doAction(const DecrementQuantityAction());
+    }
+  }
+
+  void _handleCartAction(
+    ProductDetailsEntity product, {
+    required bool inCart,
+    required int quantity,
+  }) {
+    final cartCubit = _cartCubit;
+    if (cartCubit == null) return;
+    if (inCart) {
+      cartCubit.doAction(RemoveFromCart(product.id));
+    } else {
+      cartCubit.doAction(AddToCart(product.id, quantity: quantity));
+    }
   }
 
   String _formatPrice(BuildContext context, double price) {
@@ -173,10 +280,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
 class _ProductDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
+  final CartCubit? cartCubit;
   final VoidCallback onSearchTap;
   final VoidCallback onCartTap;
 
   const _ProductDetailsAppBar({
+    required this.cartCubit,
     required this.onSearchTap,
     required this.onCartTap,
   });
@@ -203,15 +312,36 @@ class _ProductDetailsAppBar extends StatelessWidget
           tooltip: context.locale.search,
           icon: Icon(Icons.search, color: context.colors.primary),
         ),
-        IconButton(
-          onPressed: onCartTap,
-          tooltip: context.locale.cart,
-          icon: Icon(
+        _buildCartAction(context),
+      ],
+    );
+  }
+
+  Widget _buildCartAction(BuildContext context) {
+    final cubit = cartCubit;
+    if (cubit == null) {
+      return IconButton(
+        onPressed: onCartTap,
+        tooltip: context.locale.cart,
+        icon: Icon(Icons.shopping_cart_outlined, color: context.colors.primary),
+      );
+    }
+
+    return BlocSelector<CartCubit, CartState, int>(
+      bloc: cubit,
+      selector: (state) => state.totalItemsCount,
+      builder: (context, count) => IconButton(
+        onPressed: onCartTap,
+        tooltip: context.locale.cart,
+        icon: Badge.count(
+          count: count,
+          isLabelVisible: count > 0,
+          child: Icon(
             Icons.shopping_cart_outlined,
             color: context.colors.primary,
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -423,11 +553,15 @@ class _DescriptionSection extends StatelessWidget {
 
 class _BottomPriceBar extends StatelessWidget {
   final String totalPriceText;
-  final VoidCallback onAddToCart;
+  final bool inCart;
+  final bool isPending;
+  final VoidCallback onCartAction;
 
   const _BottomPriceBar({
     required this.totalPriceText,
-    required this.onAddToCart,
+    required this.inCart,
+    required this.isPending,
+    required this.onCartAction,
   });
 
   @override
@@ -435,6 +569,12 @@ class _BottomPriceBar extends StatelessWidget {
     final textSecondary = getIt.isRegistered<AppColors>()
         ? getIt<AppColors>().textSecondaryColor
         : context.colors.onSurface.withValues(alpha: 0.6);
+    final backgroundColor = inCart
+        ? context.colors.error
+        : context.colors.primary;
+    final foregroundColor = inCart
+        ? context.colors.onError
+        : context.colors.onPrimary;
 
     return SafeArea(
       top: false,
@@ -466,20 +606,40 @@ class _BottomPriceBar extends StatelessWidget {
               child: SizedBox(
                 height: 48,
                 child: ElevatedButton.icon(
-                  onPressed: onAddToCart,
+                  onPressed: isPending ? null : onCartAction,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: context.colors.primary,
-                    foregroundColor: context.colors.onPrimary,
+                    backgroundColor: backgroundColor,
+                    foregroundColor: foregroundColor,
+                    disabledBackgroundColor: backgroundColor.withValues(
+                      alpha: 0.6,
+                    ),
+                    disabledForegroundColor: foregroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 0,
                   ),
-                  icon: const Icon(Icons.add_shopping_cart_outlined, size: 20),
+                  icon: isPending
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: foregroundColor,
+                          ),
+                        )
+                      : Icon(
+                          inCart
+                              ? Icons.remove_shopping_cart_outlined
+                              : Icons.add_shopping_cart_outlined,
+                          size: 20,
+                        ),
                   label: Text(
-                    context.locale.addToCart,
+                    inCart
+                        ? context.locale.removeFromCart
+                        : context.locale.addToCart,
                     style: context.text.titleSmall?.copyWith(
-                      color: context.colors.onPrimary,
+                      color: foregroundColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

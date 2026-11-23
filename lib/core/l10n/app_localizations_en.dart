@@ -208,4 +208,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get increaseQuantity => 'Increase quantity';
+
+  @override
+  String get removeFromCart => 'Remove from cart';
+
+  @override
+  String get checkOut => 'Check Out';
+
+  @override
+  String get emptyCart => 'Your cart is empty';
+
+  @override
+  String get failedToLoadCart => 'Failed to load cart';
+
+  @override
+  String get selectPaymentMethod => 'Select Payment Method';
+
+  @override
+  String get creditCard => 'Credit Card';
+
+  @override
+  String get creditCardSubtitle =>
+      'Pay securely online with Visa or Mastercard';
+
+  @override
+  String get cashOnDelivery => 'Cash on Delivery';
+
+  @override
+  String get cashOnDeliverySubtitle => 'Pay in cash when your order arrives';
+
+  @override
+  String get shippingAddress => 'Shipping Address';
+
+  @override
+  String get addressDetails => 'Address Details';
+
+  @override
+  String get enterAddressDetails => 'enter street, building, apartment';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get enterCity => 'enter your city';
+
+  @override
+  String get postalCode => 'Postal Code (Optional)';
+
+  @override
+  String get enterPostalCode => 'enter postal code';
+
+  @override
+  String get addressDetailsRequired => 'Address details are required';
+
+  @override
+  String get cityRequired => 'City is required';
+
+  @override
+  String get placeOrder => 'Place Order';
+
+  @override
+  String get proceedToPayment => 'Proceed to Payment';
+
+  @override
+  String get orderPlacedSuccessfully => 'Order placed successfully';
+
+  @override
+  String get paymentSuccessful => 'Payment completed successfully';
+
+  @override
+  String get paymentCancelled => 'Payment was cancelled';
+
+  @override
+  String get paymentFailed => 'Payment failed. Please try again';
+
+  @override
+  String get paymentTitle => 'Online Payment';
+
+  @override
+  String get cartNotReadyForCheckout =>
+      'Cart is not ready for checkout. Please refresh and try again';
 }

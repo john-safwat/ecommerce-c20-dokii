@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:route_ecommerce/core/common_ui/route_logo.dart';
+import 'package:route_ecommerce/core/routing/app_routes.dart';
 import 'package:route_ecommerce/core/utils/context_extention.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -54,7 +55,9 @@ class HomeHeader extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               IconButton(
-                onPressed: onCartTap,
+                onPressed:
+                    onCartTap ??
+                    () => Navigator.of(context).pushNamed(AppRoutes.cart),
                 tooltip: context.locale.cart,
                 icon: Icon(
                   Icons.shopping_cart_outlined,

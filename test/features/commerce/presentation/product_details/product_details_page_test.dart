@@ -15,6 +15,18 @@ import 'package:route_ecommerce/features/commerce/presentation/home/widgets/home
 import 'package:route_ecommerce/features/commerce/presentation/product_details/product_details_cubit.dart';
 import 'package:route_ecommerce/features/commerce/presentation/product_details/product_details_page.dart';
 import 'package:route_ecommerce/features/commerce/presentation/product_details/widgets/product_details_shimmer.dart';
+import 'package:route_ecommerce/features/orders/domain/entities/cart_entity.dart';
+import 'package:route_ecommerce/features/orders/domain/entities/cart_product_entity.dart';
+import 'package:route_ecommerce/features/orders/domain/entities/checkout_session_entity.dart';
+import 'package:route_ecommerce/features/orders/domain/entities/order_entity.dart';
+import 'package:route_ecommerce/features/orders/domain/entities/shipping_address_entity.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/add_to_cart_use_case.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/create_cash_order_use_case.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/create_checkout_session_use_case.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/get_user_cart_use_case.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/remove_from_cart_use_case.dart';
+import 'package:route_ecommerce/features/orders/domain/use_cases/update_cart_use_case.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_cubit.dart';
 
 class _FakeGetProductDetailsUseCase implements GetProductDetailsUseCase {
   final Future<Result<ProductDetailsEntity>> Function(String id) _handler;
@@ -24,6 +36,114 @@ class _FakeGetProductDetailsUseCase implements GetProductDetailsUseCase {
   @override
   Future<Result<ProductDetailsEntity>> call(String productId) =>
       _handler(productId);
+}
+
+class _FakeGetUserCartUseCase implements GetUserCartUseCase {
+  final Future<Result<CartEntity>> Function() _handler;
+
+  _FakeGetUserCartUseCase(this._handler);
+
+  @override
+  Future<Result<CartEntity>> call() => _handler();
+}
+
+class _FakeAddToCartUseCase implements AddToCartUseCase {
+  final Future<Result<CartEntity>> Function(String id) _handler;
+
+  _FakeAddToCartUseCase(this._handler);
+
+  @override
+  Future<Result<CartEntity>> call(String productId) => _handler(productId);
+}
+
+class _FakeRemoveFromCartUseCase implements RemoveFromCartUseCase {
+  final Future<Result<CartEntity>> Function(String id) _handler;
+
+  _FakeRemoveFromCartUseCase(this._handler);
+
+  @override
+  Future<Result<CartEntity>> call(String productId) => _handler(productId);
+}
+
+class _FakeUpdateCartUseCase implements UpdateCartUseCase {
+  final Future<Result<CartEntity>> Function(String id, int count) _handler;
+
+  _FakeUpdateCartUseCase(this._handler);
+
+  @override
+  Future<Result<CartEntity>> call(String productId, int count) =>
+      _handler(productId, count);
+}
+
+class _FakeCreateCashOrderUseCase implements CreateCashOrderUseCase {
+  @override
+  Future<Result<OrderEntity>> call({
+    required String cartId,
+    required ShippingAddressEntity shippingAddress,
+  }) async => Success(
+    const OrderEntity(
+      id: 'order-1',
+      totalOrderPrice: 3500,
+      paymentMethodType: 'cash',
+      isPaid: false,
+      isDelivered: false,
+    ),
+  );
+}
+
+class _FakeCreateCheckoutSessionUseCase
+    implements CreateCheckoutSessionUseCase {
+  @override
+  Future<Result<CheckoutSessionEntity>> call({
+    required String cartId,
+    required ShippingAddressEntity shippingAddress,
+    String callbackUrl = 'http://localhost:3000',
+  }) async => Success(
+    const CheckoutSessionEntity(
+      url: 'https://checkout.stripe.com/pay/cs_test',
+      successUrl: 'http://localhost:3000/allorders',
+      cancelUrl: 'http://localhost:3000/cart',
+    ),
+  );
+}
+
+CartCubit _createCartCubit({List<CartProductEntity> initialItems = const []}) {
+  final items = <String, CartProductEntity>{
+    for (final item in initialItems) item.id: item,
+  };
+  return CartCubit(
+    _FakeGetUserCartUseCase(
+      () async => Success(
+        CartEntity(cartId: 'cart-1', products: items.values.toList()),
+      ),
+    ),
+    _FakeAddToCartUseCase((id) async {
+      final existing = items[id];
+      items[id] = CartProductEntity(
+        (existing?.count ?? 0) + 1,
+        id,
+        existing?.price ?? 3500,
+      );
+      return Success(
+        CartEntity(cartId: 'cart-1', products: items.values.toList()),
+      );
+    }),
+    _FakeRemoveFromCartUseCase((id) async {
+      items.remove(id);
+      return Success(
+        CartEntity(cartId: 'cart-1', products: items.values.toList()),
+      );
+    }),
+    _FakeUpdateCartUseCase((id, count) async {
+      final existing = items[id];
+      items[id] = CartProductEntity(count, id, existing?.price ?? 3500);
+      return Success(
+        CartEntity(cartId: 'cart-1', products: items.values.toList()),
+      );
+    }),
+    _FakeCreateCashOrderUseCase(),
+    _FakeCreateCheckoutSessionUseCase(),
+  );
 }
 
 const _sampleProduct = ProductDetailsEntity(
@@ -136,4 +256,94 @@ void main() {
     expect(find.byType(ProductDetailsPage), findsOneWidget);
     expect(find.text('Product Details'), findsOneWidget);
   });
+
+  testWidgets('HomeProductCard toggles product in CartCubit', (tester) async {
+    final cartCubit = _createCartCubit();
+    getIt.registerSingleton<CartCubit>(cartCubit);
+
+    final cardProduct = ProductEntity(
+      'p1',
+      'Nike Air Jordon',
+      '',
+      4.8,
+      3500,
+      3500,
+    );
+
+    await tester.pumpWidget(
+      _wrapWithApp(
+        Scaffold(
+          body: Center(
+            child: SizedBox(
+              height: 256,
+              child: HomeProductCard(product: cardProduct),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(cartCubit.state.cart.containsKey('p1'), isFalse);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+
+    expect(cartCubit.state.cart['p1']?.count, 1);
+    expect(find.byIcon(Icons.remove_shopping_cart_outlined), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.remove_shopping_cart_outlined));
+    await tester.pumpAndSettle();
+
+    expect(cartCubit.state.cart.containsKey('p1'), isFalse);
+    expect(find.byIcon(Icons.add), findsOneWidget);
+
+    await cartCubit.close();
+  });
+
+  testWidgets(
+    'ProductDetailsPage adds, updates quantity, and removes product via CartCubit',
+    (tester) async {
+      final cartCubit = _createCartCubit();
+      getIt.registerSingleton<CartCubit>(cartCubit);
+      getIt.registerFactory<ProductDetailsCubit>(
+        () => ProductDetailsCubit(
+          _FakeGetProductDetailsUseCase((_) async => Success(_sampleProduct)),
+        ),
+      );
+
+      await tester.pumpWidget(
+        _wrapWithApp(const ProductDetailsPage(productId: 'p1')),
+      );
+      await tester.pumpAndSettle();
+
+      // Increment local quantity to 2 before adding to cart.
+      await tester.tap(find.byIcon(Icons.add_circle_outline));
+      await tester.pump();
+      expect(find.text('2'), findsOneWidget);
+
+      // Tap Add to cart -> adds with quantity 2.
+      await tester.tap(find.text('Add to cart'));
+      await tester.pumpAndSettle();
+
+      expect(cartCubit.state.cart['p1']?.count, 2);
+      expect(find.text('Remove from cart'), findsOneWidget);
+
+      // Increment while in cart -> updates cart count to 3.
+      await tester.tap(find.byIcon(Icons.add_circle_outline));
+      await tester.pumpAndSettle();
+      expect(cartCubit.state.cart['p1']?.count, 3);
+      expect(find.text('EGP 10,500'), findsOneWidget);
+
+      // Tap Remove from cart -> removes product.
+      await tester.tap(find.text('Remove from cart'));
+      await tester.pumpAndSettle();
+
+      expect(cartCubit.state.cart.containsKey('p1'), isFalse);
+      expect(find.text('Add to cart'), findsOneWidget);
+
+      await cartCubit.close();
+    },
+  );
 }

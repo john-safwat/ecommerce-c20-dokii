@@ -76,10 +76,6 @@ class ToggleDescriptionAction extends ProductDetailsAction {
   const ToggleDescriptionAction();
 }
 
-class AddToCartAction extends ProductDetailsAction {
-  const AddToCartAction();
-}
-
 sealed class ProductDetailsNavigationAction {
   const ProductDetailsNavigationAction();
 }
@@ -89,8 +85,4 @@ class ShowProductDetailsToast extends ProductDetailsNavigationAction {
   final bool isError;
 
   const ShowProductDetailsToast(this.message, {this.isError = false});
-}
-
-class ShowAddedToCartToast extends ProductDetailsNavigationAction {
-  const ShowAddedToCartToast();
 }

@@ -38,10 +38,6 @@ class ProductDetailsCubit
         emit(
           state.copyWith(isDescriptionExpanded: !state.isDescriptionExpanded),
         );
-      case AddToCartAction():
-        if (state.productResource.data != null) {
-          emitNavigation(const ShowAddedToCartToast());
-        }
     }
   }
 

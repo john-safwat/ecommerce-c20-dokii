@@ -60,6 +60,8 @@ Per `AGENTS.md` rules:
 | Abstraction / Class | Implementation | Scope | File |
 |---|---|---|---|
 | `SharedPreferences` | `SharedPreferences.getInstance()` | `@preResolve` (async factory) | `lib/core/di/app_module.dart` |
+| `TokenInterceptor` | `TokenInterceptor` | `@lazySingleton` | `lib/core/network/token_interceptor.dart` |
+| `Dio` | `AppModule.provideDio(TokenInterceptor)` | `@lazySingleton` | `lib/core/di/app_module.dart` |
 | `LocaleProvider` | `LocaleProvider` | `@lazySingleton` | `lib/core/l10n/locale_provider.dart` |
 | `AppColors` | `LightColors` | `@LazySingleton(as: AppColors)` | `lib/core/theme/app_colors.dart` |
 | `AppTheme` | `AppTheme` | `@lazySingleton` | `lib/core/theme/app_theme.dart` |
@@ -69,6 +71,12 @@ Per `AGENTS.md` rules:
 | Abstraction / Class | Implementation | Scope | File |
 |---|---|---|---|
 | `SplashCubit` | `SplashCubit` | `@injectable` (factory) | `lib/features/splash/presentation/view/splash_cubit.dart` |
+| `OrdersApiClient` | `_OrdersApiClient` | `@singleton` | `lib/features/orders/data/datasource/orders_api_client.dart` |
+| `OrdersRepo` | `OrdersRepoImpl` | `@Injectable(as: OrdersRepo)` | `lib/features/orders/data/repo/orders_repo_impl.dart` |
+| `OrdersMapper` | `OrdersMapper` | `@injectable` | `lib/features/orders/data/mapper/orders_mapper.dart` |
+| `CreateCashOrderUseCase` | `CreateCashOrderUseCase` | `@injectable` | `lib/features/orders/domain/use_cases/create_cash_order_use_case.dart` |
+| `CreateCheckoutSessionUseCase` | `CreateCheckoutSessionUseCase` | `@injectable` | `lib/features/orders/domain/use_cases/create_checkout_session_use_case.dart` |
+| `CartCubit` | `CartCubit` | `@singleton` | `lib/features/orders/presentation/cart/cart_cubit.dart` |
 
 ---
 

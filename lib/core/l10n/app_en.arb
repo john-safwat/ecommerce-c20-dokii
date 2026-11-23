@@ -268,5 +268,109 @@
   "increaseQuantity": "Increase quantity",
   "@increaseQuantity": {
     "description": "Semantic tooltip for increment quantity button"
+  },
+  "removeFromCart": "Remove from cart",
+  "@removeFromCart": {
+    "description": "Button label and tooltip for removing a product from cart"
+  },
+  "checkOut": "Check Out",
+  "@checkOut": {
+    "description": "Primary checkout CTA button label on cart screen"
+  },
+  "emptyCart": "Your cart is empty",
+  "@emptyCart": {
+    "description": "Empty state message when the shopping cart has no items"
+  },
+  "failedToLoadCart": "Failed to load cart",
+  "@failedToLoadCart": {
+    "description": "Error message when cart fails to load"
+  },
+  "selectPaymentMethod": "Select Payment Method",
+  "@selectPaymentMethod": {
+    "description": "Heading of the checkout payment method bottom sheet"
+  },
+  "creditCard": "Credit Card",
+  "@creditCard": {
+    "description": "Credit card online payment option title"
+  },
+  "creditCardSubtitle": "Pay securely online with Visa or Mastercard",
+  "@creditCardSubtitle": {
+    "description": "Credit card online payment option subtitle"
+  },
+  "cashOnDelivery": "Cash on Delivery",
+  "@cashOnDelivery": {
+    "description": "Cash on delivery payment option title"
+  },
+  "cashOnDeliverySubtitle": "Pay in cash when your order arrives",
+  "@cashOnDeliverySubtitle": {
+    "description": "Cash on delivery payment option subtitle"
+  },
+  "shippingAddress": "Shipping Address",
+  "@shippingAddress": {
+    "description": "Shipping address section heading in checkout bottom sheet"
+  },
+  "addressDetails": "Address Details",
+  "@addressDetails": {
+    "description": "Shipping address details field label"
+  },
+  "enterAddressDetails": "enter street, building, apartment",
+  "@enterAddressDetails": {
+    "description": "Shipping address details field hint"
+  },
+  "city": "City",
+  "@city": {
+    "description": "Shipping city field label"
+  },
+  "enterCity": "enter your city",
+  "@enterCity": {
+    "description": "Shipping city field hint"
+  },
+  "postalCode": "Postal Code (Optional)",
+  "@postalCode": {
+    "description": "Optional postal code field label"
+  },
+  "enterPostalCode": "enter postal code",
+  "@enterPostalCode": {
+    "description": "Optional postal code field hint"
+  },
+  "addressDetailsRequired": "Address details are required",
+  "@addressDetailsRequired": {
+    "description": "Validation error when address details are empty"
+  },
+  "cityRequired": "City is required",
+  "@cityRequired": {
+    "description": "Validation error when city is empty"
+  },
+  "placeOrder": "Place Order",
+  "@placeOrder": {
+    "description": "Submit button label for cash on delivery checkout"
+  },
+  "proceedToPayment": "Proceed to Payment",
+  "@proceedToPayment": {
+    "description": "Submit button label for credit card checkout"
+  },
+  "orderPlacedSuccessfully": "Order placed successfully",
+  "@orderPlacedSuccessfully": {
+    "description": "Toast message shown after a cash order is created"
+  },
+  "paymentSuccessful": "Payment completed successfully",
+  "@paymentSuccessful": {
+    "description": "Toast message shown after successful online payment"
+  },
+  "paymentCancelled": "Payment was cancelled",
+  "@paymentCancelled": {
+    "description": "Toast message shown when online payment is cancelled"
+  },
+  "paymentFailed": "Payment failed. Please try again",
+  "@paymentFailed": {
+    "description": "Toast message shown when online payment fails"
+  },
+  "paymentTitle": "Online Payment",
+  "@paymentTitle": {
+    "description": "AppBar title on the payment WebView page"
+  },
+  "cartNotReadyForCheckout": "Cart is not ready for checkout. Please refresh and try again",
+  "@cartNotReadyForCheckout": {
+    "description": "Error toast when cartId is missing during checkout"
   }
 }

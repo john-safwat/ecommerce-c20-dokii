@@ -209,4 +209,84 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get increaseQuantity => 'زيادة الكمية';
+
+  @override
+  String get removeFromCart => 'إزالة من السلة';
+
+  @override
+  String get checkOut => 'إتمام الشراء';
+
+  @override
+  String get emptyCart => 'عربة التسوق فارغة';
+
+  @override
+  String get failedToLoadCart => 'تعذر تحميل عربة التسوق';
+
+  @override
+  String get selectPaymentMethod => 'اختر طريقة الدفع';
+
+  @override
+  String get creditCard => 'بطاقة ائتمان';
+
+  @override
+  String get creditCardSubtitle =>
+      'ادفع بأمان عبر الإنترنت باستخدام فيزا أو ماستركارد';
+
+  @override
+  String get cashOnDelivery => 'الدفع عند الاستلام';
+
+  @override
+  String get cashOnDeliverySubtitle => 'ادفع نقدًا عند وصول طلبك';
+
+  @override
+  String get shippingAddress => 'عنوان الشحن';
+
+  @override
+  String get addressDetails => 'تفاصيل العنوان';
+
+  @override
+  String get enterAddressDetails => 'أدخل الشارع، المبنى، الشقة';
+
+  @override
+  String get city => 'المدينة';
+
+  @override
+  String get enterCity => 'أدخل مدينتك';
+
+  @override
+  String get postalCode => 'الرمز البريدي (اختياري)';
+
+  @override
+  String get enterPostalCode => 'أدخل الرمز البريدي';
+
+  @override
+  String get addressDetailsRequired => 'تفاصيل العنوان مطلوبة';
+
+  @override
+  String get cityRequired => 'المدينة مطلوبة';
+
+  @override
+  String get placeOrder => 'تأكيد الطلب';
+
+  @override
+  String get proceedToPayment => 'المتابعة إلى الدفع';
+
+  @override
+  String get orderPlacedSuccessfully => 'تم تقديم الطلب بنجاح';
+
+  @override
+  String get paymentSuccessful => 'تم الدفع بنجاح';
+
+  @override
+  String get paymentCancelled => 'تم إلغاء عملية الدفع';
+
+  @override
+  String get paymentFailed => 'فشلت عملية الدفع، يرجى المحاولة مرة أخرى';
+
+  @override
+  String get paymentTitle => 'الدفع الإلكتروني';
+
+  @override
+  String get cartNotReadyForCheckout =>
+      'عربة التسوق غير جاهزة لإتمام الشراء، يرجى التحديث والمحاولة مرة أخرى';
 }

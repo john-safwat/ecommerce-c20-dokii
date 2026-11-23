@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:route_ecommerce/core/di/injection.dart';
 import 'package:route_ecommerce/core/routing/app_routes.dart';
 import 'package:route_ecommerce/core/theme/app_colors.dart';
 import 'package:route_ecommerce/core/utils/context_extention.dart';
 import 'package:route_ecommerce/features/commerce/domain/entities/product_entity.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_actions.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_cubit.dart';
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_state.dart';
 
 class HomeProductCard extends StatelessWidget {
   final ProductEntity product;
@@ -73,6 +77,7 @@ class HomeProductCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       _RatingAndAddRow(
+                        productId: product.id,
                         rating: product.reviews,
                         starColor: starColor,
                         onAddToCartTap: onAddToCartTap,
@@ -189,11 +194,13 @@ class _PriceRow extends StatelessWidget {
 }
 
 class _RatingAndAddRow extends StatelessWidget {
+  final String productId;
   final double rating;
   final Color starColor;
   final VoidCallback? onAddToCartTap;
 
   const _RatingAndAddRow({
+    required this.productId,
     required this.rating,
     required this.starColor,
     this.onAddToCartTap,
@@ -221,18 +228,93 @@ class _RatingAndAddRow extends StatelessWidget {
             ],
           ),
         ),
-        Material(
-          color: context.colors.primary,
-          shape: const CircleBorder(),
-          child: IconButton(
-            onPressed: onAddToCartTap,
-            tooltip: context.locale.addToCart,
-            padding: EdgeInsets.zero,
-            iconSize: 18,
-            icon: Icon(Icons.add, color: context.colors.onPrimary),
-          ),
-        ),
+        _CardCartButton(productId: productId, onTapOverride: onAddToCartTap),
       ],
+    );
+  }
+}
+
+class _CardCartButton extends StatelessWidget {
+  final String productId;
+  final VoidCallback? onTapOverride;
+
+  const _CardCartButton({required this.productId, this.onTapOverride});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!getIt.isRegistered<CartCubit>()) {
+      return _buildCircleButton(
+        context,
+        inCart: false,
+        isPending: false,
+        onPressed: onTapOverride,
+      );
+    }
+
+    final cartCubit = getIt<CartCubit>();
+    return BlocSelector<CartCubit, CartState, ({bool inCart, bool isPending})>(
+      bloc: cartCubit,
+      selector: (state) => (
+        inCart: state.cart.containsKey(productId),
+        isPending: state.isProductPending(productId),
+      ),
+      builder: (context, cartStatus) {
+        final onPressed = cartStatus.isPending
+            ? null
+            : onTapOverride ??
+                  () => cartCubit.doAction(
+                    cartStatus.inCart
+                        ? RemoveFromCart(productId)
+                        : AddToCart(productId),
+                  );
+
+        return _buildCircleButton(
+          context,
+          inCart: cartStatus.inCart,
+          isPending: cartStatus.isPending,
+          onPressed: onPressed,
+        );
+      },
+    );
+  }
+
+  Widget _buildCircleButton(
+    BuildContext context, {
+    required bool inCart,
+    required bool isPending,
+    required VoidCallback? onPressed,
+  }) {
+    final backgroundColor = inCart
+        ? context.colors.error
+        : context.colors.primary;
+    final foregroundColor = inCart
+        ? context.colors.onError
+        : context.colors.onPrimary;
+
+    return Material(
+      color: backgroundColor,
+      shape: const CircleBorder(),
+      child: IconButton(
+        onPressed: onPressed,
+        tooltip: inCart
+            ? context.locale.removeFromCart
+            : context.locale.addToCart,
+        padding: EdgeInsets.zero,
+        iconSize: 18,
+        icon: isPending
+            ? SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: foregroundColor,
+                ),
+              )
+            : Icon(
+                inCart ? Icons.remove_shopping_cart_outlined : Icons.add,
+                color: foregroundColor,
+              ),
+      ),
     );
   }
 }

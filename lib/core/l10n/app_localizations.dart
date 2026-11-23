@@ -493,6 +493,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Increase quantity'**
   String get increaseQuantity;
+
+  /// Button label and tooltip for removing a product from cart
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from cart'**
+  String get removeFromCart;
+
+  /// Primary checkout CTA button label on cart screen
+  ///
+  /// In en, this message translates to:
+  /// **'Check Out'**
+  String get checkOut;
+
+  /// Empty state message when the shopping cart has no items
+  ///
+  /// In en, this message translates to:
+  /// **'Your cart is empty'**
+  String get emptyCart;
+
+  /// Error message when cart fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load cart'**
+  String get failedToLoadCart;
+
+  /// Heading of the checkout payment method bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select Payment Method'**
+  String get selectPaymentMethod;
+
+  /// Credit card online payment option title
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get creditCard;
+
+  /// Credit card online payment option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Pay securely online with Visa or Mastercard'**
+  String get creditCardSubtitle;
+
+  /// Cash on delivery payment option title
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Delivery'**
+  String get cashOnDelivery;
+
+  /// Cash on delivery payment option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in cash when your order arrives'**
+  String get cashOnDeliverySubtitle;
+
+  /// Shipping address section heading in checkout bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Address'**
+  String get shippingAddress;
+
+  /// Shipping address details field label
+  ///
+  /// In en, this message translates to:
+  /// **'Address Details'**
+  String get addressDetails;
+
+  /// Shipping address details field hint
+  ///
+  /// In en, this message translates to:
+  /// **'enter street, building, apartment'**
+  String get enterAddressDetails;
+
+  /// Shipping city field label
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// Shipping city field hint
+  ///
+  /// In en, this message translates to:
+  /// **'enter your city'**
+  String get enterCity;
+
+  /// Optional postal code field label
+  ///
+  /// In en, this message translates to:
+  /// **'Postal Code (Optional)'**
+  String get postalCode;
+
+  /// Optional postal code field hint
+  ///
+  /// In en, this message translates to:
+  /// **'enter postal code'**
+  String get enterPostalCode;
+
+  /// Validation error when address details are empty
+  ///
+  /// In en, this message translates to:
+  /// **'Address details are required'**
+  String get addressDetailsRequired;
+
+  /// Validation error when city is empty
+  ///
+  /// In en, this message translates to:
+  /// **'City is required'**
+  String get cityRequired;
+
+  /// Submit button label for cash on delivery checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Place Order'**
+  String get placeOrder;
+
+  /// Submit button label for credit card checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Proceed to Payment'**
+  String get proceedToPayment;
+
+  /// Toast message shown after a cash order is created
+  ///
+  /// In en, this message translates to:
+  /// **'Order placed successfully'**
+  String get orderPlacedSuccessfully;
+
+  /// Toast message shown after successful online payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment completed successfully'**
+  String get paymentSuccessful;
+
+  /// Toast message shown when online payment is cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Payment was cancelled'**
+  String get paymentCancelled;
+
+  /// Toast message shown when online payment fails
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed. Please try again'**
+  String get paymentFailed;
+
+  /// AppBar title on the payment WebView page
+  ///
+  /// In en, this message translates to:
+  /// **'Online Payment'**
+  String get paymentTitle;
+
+  /// Error toast when cartId is missing during checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Cart is not ready for checkout. Please refresh and try again'**
+  String get cartNotReadyForCheckout;
 }
 
 class _AppLocalizationsDelegate

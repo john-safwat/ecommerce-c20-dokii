@@ -15,6 +15,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:route_ecommerce/core/di/app_module.dart' as _i1031;
 import 'package:route_ecommerce/core/l10n/locale_provider.dart' as _i441;
+import 'package:route_ecommerce/core/network/token_interceptor.dart' as _i33;
 import 'package:route_ecommerce/core/theme/app_colors.dart' as _i536;
 import 'package:route_ecommerce/core/theme/app_theme.dart' as _i1001;
 import 'package:route_ecommerce/features/auth/data/data_source/auth_api_client.dart'
@@ -65,6 +66,28 @@ import 'package:route_ecommerce/features/commerce/presentation/product_details/p
     as _i150;
 import 'package:route_ecommerce/features/commerce/presentation/products_list/products_list_cubit.dart'
     as _i834;
+import 'package:route_ecommerce/features/orders/data/datasource/orders_api_client.dart'
+    as _i421;
+import 'package:route_ecommerce/features/orders/data/mapper/orders_mapper.dart'
+    as _i364;
+import 'package:route_ecommerce/features/orders/data/repo/orders_repo_impl.dart'
+    as _i826;
+import 'package:route_ecommerce/features/orders/domain/repo/orders_repo.dart'
+    as _i420;
+import 'package:route_ecommerce/features/orders/domain/use_cases/add_to_cart_use_case.dart'
+    as _i1015;
+import 'package:route_ecommerce/features/orders/domain/use_cases/create_cash_order_use_case.dart'
+    as _i740;
+import 'package:route_ecommerce/features/orders/domain/use_cases/create_checkout_session_use_case.dart'
+    as _i225;
+import 'package:route_ecommerce/features/orders/domain/use_cases/get_user_cart_use_case.dart'
+    as _i682;
+import 'package:route_ecommerce/features/orders/domain/use_cases/remove_from_cart_use_case.dart'
+    as _i676;
+import 'package:route_ecommerce/features/orders/domain/use_cases/update_cart_use_case.dart'
+    as _i915;
+import 'package:route_ecommerce/features/orders/presentation/cart/cart_cubit.dart'
+    as _i661;
 import 'package:route_ecommerce/features/splash/data/data_source/splash_local_data_source.dart'
     as _i557;
 import 'package:route_ecommerce/features/splash/data/repo/splash_repo_impl.dart'
@@ -91,7 +114,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1015.AuthMapper>(() => _i1015.AuthMapper());
     gh.factory<_i1039.CommerceMapper>(() => _i1039.CommerceMapper());
-    gh.lazySingleton<_i361.Dio>(() => appModule.provideDio());
+    gh.factory<_i364.OrdersMapper>(() => _i364.OrdersMapper());
     gh.factory<_i267.CommerceLocalDataSource>(
       () => _i267.CommerceLocalDataSourceImpl(),
     );
@@ -99,12 +122,33 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i557.SplashLocalDataSource>(
       () => _i557.SplashLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.factory<_i392.SplashRepo>(
+      () => _i999.SplashRepoImpl(gh<_i557.SplashLocalDataSource>()),
+    );
+    gh.lazySingleton<_i441.LocaleProvider>(
+      () => _i441.LocaleProvider(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i921.CheckTokenUseCase>(
+      () => _i921.CheckTokenUseCase(gh<_i392.SplashRepo>()),
+    );
+    gh.lazySingleton<_i33.TokenInterceptor>(
+      () => _i33.TokenInterceptor(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i135.SplashCubit>(
+      () => _i135.SplashCubit(gh<_i921.CheckTokenUseCase>()),
+    );
+    gh.lazySingleton<_i1001.AppTheme>(
+      () => _i1001.AppTheme(gh<_i536.AppColors>()),
+    );
+    gh.lazySingleton<_i361.Dio>(
+      () => appModule.provideDio(gh<_i33.TokenInterceptor>()),
+    );
+    gh.singleton<_i421.OrdersApiClient>(
+      () => _i421.OrdersApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i419.AuthApiClient>(() => _i419.AuthApiClient(gh<_i361.Dio>()));
     gh.factory<_i385.CommerceApiClient>(
       () => _i385.CommerceApiClient(gh<_i361.Dio>()),
-    );
-    gh.factory<_i392.SplashRepo>(
-      () => _i999.SplashRepoImpl(gh<_i557.SplashLocalDataSource>()),
     );
     gh.factory<_i162.AuthRepo>(
       () => _i146.AuthRepoImpl(
@@ -113,17 +157,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i460.SharedPreferences>(),
       ),
     );
-    gh.lazySingleton<_i441.LocaleProvider>(
-      () => _i441.LocaleProvider(gh<_i460.SharedPreferences>()),
-    );
     gh.factory<_i1003.LoginUseCase>(
       () => _i1003.LoginUseCase(gh<_i162.AuthRepo>()),
     );
     gh.factory<_i679.RegisterUseCase>(
       () => _i679.RegisterUseCase(gh<_i162.AuthRepo>()),
-    );
-    gh.factory<_i921.CheckTokenUseCase>(
-      () => _i921.CheckTokenUseCase(gh<_i392.SplashRepo>()),
     );
     gh.factory<_i858.CommerceRepo>(
       () => _i478.CommerceRepoImpl(
@@ -138,14 +176,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i534.GetProductDetailsUseCase>(
       () => _i534.GetProductDetailsUseCase(gh<_i858.CommerceRepo>()),
     );
-    gh.factory<_i135.SplashCubit>(
-      () => _i135.SplashCubit(gh<_i921.CheckTokenUseCase>()),
-    );
     gh.factory<_i834.ProductsListCubit>(
       () => _i834.ProductsListCubit(gh<_i763.GetPaginatedProductsUseCase>()),
     );
-    gh.lazySingleton<_i1001.AppTheme>(
-      () => _i1001.AppTheme(gh<_i536.AppColors>()),
+    gh.factory<_i420.OrdersRepo>(
+      () => _i826.OrdersRepoImpl(
+        gh<_i421.OrdersApiClient>(),
+        gh<_i364.OrdersMapper>(),
+      ),
     );
     gh.factory<_i150.ProductDetailsCubit>(
       () => _i150.ProductDetailsCubit(gh<_i534.GetProductDetailsUseCase>()),
@@ -175,6 +213,24 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i859.RegisterCubit>(
       () => _i859.RegisterCubit(gh<_i679.RegisterUseCase>()),
     );
+    gh.factory<_i1015.AddToCartUseCase>(
+      () => _i1015.AddToCartUseCase(gh<_i420.OrdersRepo>()),
+    );
+    gh.factory<_i740.CreateCashOrderUseCase>(
+      () => _i740.CreateCashOrderUseCase(gh<_i420.OrdersRepo>()),
+    );
+    gh.factory<_i225.CreateCheckoutSessionUseCase>(
+      () => _i225.CreateCheckoutSessionUseCase(gh<_i420.OrdersRepo>()),
+    );
+    gh.factory<_i682.GetUserCartUseCase>(
+      () => _i682.GetUserCartUseCase(gh<_i420.OrdersRepo>()),
+    );
+    gh.factory<_i676.RemoveFromCartUseCase>(
+      () => _i676.RemoveFromCartUseCase(gh<_i420.OrdersRepo>()),
+    );
+    gh.factory<_i915.UpdateCartUseCase>(
+      () => _i915.UpdateCartUseCase(gh<_i420.OrdersRepo>()),
+    );
     gh.factory<_i229.CategoriesCubit>(
       () => _i229.CategoriesCubit(
         gh<_i940.GetCategoriesUseCase>(),
@@ -183,6 +239,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i52.HomeCubit>(
       () => _i52.HomeCubit(gh<_i360.GetHomeDataUseCase>()),
+    );
+    gh.singleton<_i661.CartCubit>(
+      () => _i661.CartCubit(
+        gh<_i682.GetUserCartUseCase>(),
+        gh<_i1015.AddToCartUseCase>(),
+        gh<_i676.RemoveFromCartUseCase>(),
+        gh<_i915.UpdateCartUseCase>(),
+        gh<_i740.CreateCashOrderUseCase>(),
+        gh<_i225.CreateCheckoutSessionUseCase>(),
+      ),
     );
     return this;
   }

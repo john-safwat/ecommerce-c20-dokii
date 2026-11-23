@@ -2,6 +2,7 @@ import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:route_ecommerce/core/network/token_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @module
@@ -11,13 +12,14 @@ abstract class AppModule {
       SharedPreferences.getInstance();
 
   @lazySingleton
-  Dio provideDio() {
+  Dio provideDio(TokenInterceptor tokenInterceptor) {
     final dio = Dio();
     dio.options = BaseOptions(
       baseUrl: "https://ecommerce.routemisr.com",
       receiveTimeout: Duration(seconds: 180),
       connectTimeout: Duration(seconds: 180),
     );
+    dio.interceptors.add(tokenInterceptor);
     dio.interceptors.add(
       PrettyDioLogger(
         requestHeader: true,

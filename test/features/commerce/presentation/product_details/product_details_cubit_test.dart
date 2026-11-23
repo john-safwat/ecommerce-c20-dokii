@@ -107,33 +107,23 @@ void main() {
       },
     );
 
-    test(
-      'toggles wishlist, description, size, color, and emits add to cart',
-      () async {
-        final cubit = ProductDetailsCubit(
-          _FakeGetProductDetailsUseCase((_) async => Success(_sampleProduct)),
-        );
+    test('toggles wishlist, description, size, and color', () async {
+      final cubit = ProductDetailsCubit(
+        _FakeGetProductDetailsUseCase((_) async => Success(_sampleProduct)),
+      );
 
-        final navEvents = <ProductDetailsNavigationAction>[];
-        final navSub = cubit.navStream.listen(navEvents.add);
+      await cubit.doAction(const LoadProductDetailsAction('p1'));
+      await cubit.doAction(const ToggleWishlistAction());
+      await cubit.doAction(const ToggleDescriptionAction());
+      await cubit.doAction(const SelectSizeAction(0));
+      await cubit.doAction(const SelectColorAction(3));
 
-        await cubit.doAction(const LoadProductDetailsAction('p1'));
-        await cubit.doAction(const ToggleWishlistAction());
-        await cubit.doAction(const ToggleDescriptionAction());
-        await cubit.doAction(const SelectSizeAction(0));
-        await cubit.doAction(const SelectColorAction(3));
-        await cubit.doAction(const AddToCartAction());
-        await Future<void>.delayed(Duration.zero);
+      expect(cubit.state.isWishlisted, isTrue);
+      expect(cubit.state.isDescriptionExpanded, isTrue);
+      expect(cubit.state.selectedSizeIndex, 0);
+      expect(cubit.state.selectedColorIndex, 3);
 
-        expect(cubit.state.isWishlisted, isTrue);
-        expect(cubit.state.isDescriptionExpanded, isTrue);
-        expect(cubit.state.selectedSizeIndex, 0);
-        expect(cubit.state.selectedColorIndex, 3);
-        expect(navEvents.last, isA<ShowAddedToCartToast>());
-
-        await navSub.cancel();
-        await cubit.close();
-      },
-    );
+      await cubit.close();
+    });
   });
 }

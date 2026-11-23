@@ -71,4 +71,18 @@ class Validator {
     }
     return null;
   }
+
+  String? addressDetailsValidation(String? input, AppLocalizations locale) {
+    if (input == null || input.trim().isEmpty) {
+      return locale.addressDetailsRequired;
+    }
+    return null;
+  }
+
+  String? cityValidation(String? input, AppLocalizations locale) {
+    if (input == null || input.trim().isEmpty) {
+      return locale.cityRequired;
+    }
+    return null;
+  }
 }
